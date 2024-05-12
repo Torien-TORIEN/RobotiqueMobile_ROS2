@@ -1,0 +1,39 @@
+<?xml version='1.0'?>
+<sdf version="1.9">
+    <!-- adding the ground plane -->
+    <model name="ground_plane">
+        <!-- the ground will not move... -->
+        <static>true</static>
+        <!-- it is composed of only one link-->
+        <link name="ground_plane_link">
+            <!-- The collision shape of the link (can differ from the visual shape) -->
+            <collision name="ground_plane_collision">
+                <!-- the geometry of the collision  -->
+                <geometry>
+                    <plane>
+                        <!-- A ground plane  (x, y) -->
+                        <normal>0 0 1</normal>
+                    </plane>
+                </geometry>
+            </collision>
+            <!-- the visual aspect of the link -->
+            <visual name="ground_plane_visual">
+                <!-- the visual geometry of the link  -->
+                <geometry>
+                    <plane>
+                        <!-- A ground plane  (x, y) -->
+                        <normal>0 0 1</normal>
+                        <!-- with a 100x100 size (meters) -->
+                        <size>100 100</size>
+                    </plane>
+                </geometry>
+                <material>
+                    <!-- To define the color of the ground with the light reflexion -->
+                    <ambient>0.68 0.96 0.52 1</ambient>
+                    <diffuse>0.68 0.96 0.52 1</diffuse>
+                    <specular>0.68 0.96 0.52 1</specular>
+                </material>
+            </visual>
+        </link>
+    </model>
+</sdf>

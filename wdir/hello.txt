@@ -1,0 +1,49 @@
+To check the volumes of the docker image...
+
+
+blablabla 
+
+node : programme qui s'execute
+node list :lister les nodes
+run package nom_node : ex ros2 run turtlesim turtlesim_node
+ros2 node info /turtlesim  : info 
+
+topic : canal de communication
+topic list : lister topic 
+topic list -t : voir messsage 
+
+
+colcon build  --symlink-install :dans wdir après avoir créé les package et node .py
+                --cmake-clean-cach --cmake-clean-first
+
+colcon build --symlink-install --cmake-clean-cach --cmake-clean-first
+
+Pour chaque node créée : 
+ chmod +x nom_de_mon.node.py  [placer dans de dossier contenant le node   src ]
+ colcon build --symlink-install --cmake-clean-cach --cmake-clean-first
+ source install/setup.bash
+ ros2 run my_package my_node.py 
+
+
+colcon build --symlink-install --cmake-clean-cache --cmake-clean-first --packages-select nom_package 
+
+https://gitlab.u-angers.fr/cours/mobile_robotic_v2_student/
+
+RVIZ2 : outil de visualisation
+    rviz2
+
+GAZEBO : Outil de simulation
+    ign gazebo empty.sdf
+
+LiDAR: Detecter l'obstacle 
+    ign topic -l | grep lidar
+    ign topic -e -t /lidar # afficher les valeurs de Lidar  -e : echo  & -t : topic 
+
+    ign topic -i -t /lidar # Affiche les infos de Lidar  -i :information
+                            Publishers [Address, Message Type]:
+                                tcp://172.18.0.2:44597, ignition.msgs.LaserScan
+
+#Stopper les processus
+# ps aux | grep ign : trouve tous les processus avec ign
+# pkill -9 -f "ing" : stoppe tous les processus avec le mot ign
+# kill -9 PID       : stoppe le processus avec PID

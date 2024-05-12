@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+<sdf version="1.9">
+    <!-- The world element encapsulates an entire world description including models, scene, physics and plugins -->
+    <world name="my_world">
+        <!-- The plugins for the simulation -->
+        <plugin filename="libignition-gazebo-physics-system.so" name="ignition::gazebo::systems::Physics">
+            <!-- The Physics plugin is very important for simulating the dynamics of the world. -->
+        </plugin>
+        <plugin filename="libignition-gazebo-scene-broadcaster-system.so" name="ignition::gazebo::systems::SceneBroadcaster">
+            <!-- SceneBroadcaster shows our world scene -->
+        </plugin>
+        <plugin
+            filename="libignition-gazebo-sensors-system.so"
+            name="ignition::gazebo::systems::Sensors">
+            <render_engine>ogre2</render_engine>
+        </plugin>
+
+        <!-- Add the light to the simulation -->
+        <include>
+            <uri>model://gazebo/tp3_light.sdf</uri>
+        </include>
+
+        <!-- Add the ground to the simulation -->
+        <include>
+            <uri>model://gazebo/tp3_ground.sdf</uri>
+        </include>
+
+        <!-- Add the wall to the simulation -->
+        <include>
+            <uri>model://gazebo/tp3_room.sdf</uri>
+        </include>
+
+        <!-- Add the robot to the simulation -->
+        <include>
+            <pose>0 0 1 0 0 0</pose>
+            <uri>model://urdf/tp3_robot.urdf</uri>
+        </include>
+
+    </world>
+</sdf>

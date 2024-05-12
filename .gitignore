@@ -1,0 +1,11 @@
+*__pycache__
+*~
+*.pyc
+*.vscode
+*.tar.gz
+generate_student_code/outputs/
+wdir/build/
+wdir/install/
+wdir/log/
+
+wdir_1

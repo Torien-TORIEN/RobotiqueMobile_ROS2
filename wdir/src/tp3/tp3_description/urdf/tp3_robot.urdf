@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<robot name="tp3_robot">
+    
+    <material name="blue">
+        <color rgba="0.1 0.1 0.7 1.0"/>
+    </material>
+    <material name="red">
+        <color rgba="0.7 0.1 0.1 1.0"/>
+    </material>
+    <material name="green">
+        <color rgba="0.1 0.7 0.1 1.0"/>
+    </material>
+    <material name="yellow">
+        <color rgba="0.7 0.7 0.1 1.0"/>
+    </material>
+
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <box size="2.0 1.0 0.5"/>
+            </geometry>
+            <material name = "blue"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="2.0 1.0 0.5"/>
+            </geometry>
+        </collision>
+        <inertial> <!--inertial properties of the link mass, inertia matix-->
+            <mass value="1"/>
+            <inertia ixx="0.10416666666666666" ixy="0" ixz="0" 
+                        iyy="0.35416666666666663" iyz="0" 
+                        izz="0.41666666666666663"/>
+        </inertial>
+    </link>
+
+    <link name='left_wheel_link'>
+        <visual name='visual'>
+            <geometry>
+                <cylinder radius="0.4" length="0.2"/>
+            </geometry>
+            <material name = "green"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="0.4" length="0.2"/>
+            </geometry>
+        </collision>
+        <inertial> 
+            <mass value="0.5"/>
+            <inertia ixx="0.02166666666666667" ixy="0" ixz="0" 
+                        iyy="0.02166666666666667" iyz="0" 
+                        izz="0.04000000000000001"/>
+        </inertial>
+    </link>
+    <joint name="base_to_left_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="left_wheel_link"/>
+        <axis xyz="0 0 1"/>
+        <origin xyz="-0.5 0.6 0" rpy="-1.5707 0 0"/>
+    </joint>
+
+    <link name='right_wheel_link'>
+        <visual name='visual'>
+            <geometry>
+                <cylinder radius="0.4" length="0.2"/>
+            </geometry>
+            <material name = "red"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="0.4" length="0.2"/>
+            </geometry>
+        </collision>
+        <inertial> 
+            <mass value="0.5"/>
+            <inertia ixx="0.02166666666666667" ixy="0" ixz="0" 
+                        iyy="0.02166666666666667" iyz="0" 
+                        izz="0.04000000000000001"/>
+        </inertial>
+    </link>
+    <joint name="base_to_right_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="right_wheel_link"/>
+        <axis xyz="0 0 1"/>
+        <origin xyz="-0.5 -0.6 0" rpy="-1.5707 0 0"/>
+    </joint>
+
+    <link name='caster_wheel_link'>
+        <visual name='visual'>
+            <geometry>
+                <sphere radius="0.2"/>
+            </geometry>
+            <material name = "yellow"/>
+        </visual>
+        <collision>
+            <geometry>
+                <sphere radius="0.2"/>
+            </geometry>
+        </collision>
+        <inertial> 
+            <mass value="0"/>
+            <inertia ixx="0.0" ixy="0" ixz="0" 
+                        iyy="0.0" iyz="0" 
+                        izz="0.0"/>
+        </inertial>
+    </link>
+    <joint name='base_to_caster_wheel_joint' type="fixed">
+        <parent link="base_link"/>
+        <child link="caster_wheel_link"/>
+        <origin xyz="0.8 0 -0.2" rpy="0 0 0"/>
+    </joint>
+
+    <gazebo>
+        <plugin
+            filename="libignition-gazebo-diff-drive-system.so"
+            name="ignition::gazebo::systems::DiffDrive">
+            <left_joint>base_to_left_wheel_joint</left_joint>
+            <right_joint>base_to_right_wheel_joint</right_joint>
+            <wheel_separation>1.2</wheel_separation>
+            <wheel_radius>0.4</wheel_radius>
+            <odom_publish_frequency>1</odom_publish_frequency>
+            <topic>cmd_vel</topic>
+        </plugin>
+    </gazebo>
+
+    <gazebo reference="base_link">
+        <!-- The LiDAR sensor -->
+        <sensor name='lidar' type='gpu_lidar'>"
+            <!-- Pose of the LiDAR according to the base link -->
+            <pose relative_to='base_link'>0 0 0.5 0 0 0</pose>
+            <!-- Define the frame id for the LiDAR data (same as the robot's frame) -->
+            <ignition_frame_id>base_link</ignition_frame_id>
+            <!-- topic name for the LiDAR data -->
+            <topic>lidar</topic>
+            <!-- publishing rate of the data (in Hz) -->
+            <update_rate>10</update_rate>
+            <!-- ray configuration (360° plane LiDAR)-->
+            <ray>
+                <scan>
+                    <horizontal>
+                        <samples>640</samples>
+                        <resolution>1</resolution>
+                        <min_angle>-3.14159</min_angle>
+                        <max_angle>3.14159</max_angle>
+                    </horizontal>
+                    <vertical>
+                        <samples>1</samples>
+                        <resolution>0.01</resolution>
+                        <min_angle>0</min_angle>
+                        <max_angle>0</max_angle>
+                    </vertical>
+                </scan>
+                <range>
+                    <min>0.08</min>
+                    <max>10.0</max>
+                    <resolution>0.01</resolution>
+                </range>
+            </ray>
+        </sensor>
+    </gazebo>
+
+    
+
+
+    
+</robot>

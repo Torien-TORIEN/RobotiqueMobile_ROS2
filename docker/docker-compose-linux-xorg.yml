@@ -1,0 +1,31 @@
+# should be run using the run_linux script
+# to manage the xauth (x11 server authentification)
+
+version: '2.16'
+
+services:
+  ros2:
+    image: ros2:user
+    build: .
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    container_name: ros2
+    hostname: ros2
+    extra_hosts:
+        - "ros2:127.0.0.1"
+    environment:
+      - DISPLAY=$DISPLAY
+      - QT_X11_NO_MITSHM=1
+      - XDG_RUNTIME_DIR=/tmp/runtime-root
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw"
+      - ../wdir:/home/docker/wdir
+    network_mode: host
+    working_dir: /home/docker/wdir
+    privileged: true
+    command: bash
+    # devices:
+    #   - "/dev/ttyUSB0:/dev/ttyUSB0"
+    # group_add:
+    #   - "dialout"
+

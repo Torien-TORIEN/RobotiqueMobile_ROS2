@@ -1,0 +1,27 @@
+<?xml version='1.0'?>
+<sdf version="1.9">
+    <light type="directional" name="sun">
+        <!-- <pose> is the position (x,y,z) and orientation (roll, pitch, yaw)
+        of the light element with respect to the frame mentioned in the relative_to attribute;
+        in our case (relative_to attribute is ignored) it is relative to the world. -->
+        <pose>0 0 10 0 0 0</pose>
+        <!-- <cast_shadows> when true the light will cast shadows -->
+        <cast_shadows>true</cast_shadows>
+        <!-- <diffuse> and <specular> are the diffuse and specular light color -->
+        <diffuse>0.8 0.8 0.8 1</diffuse>
+        <specular>0.2 0.2 0.2 1</specular>
+        <!-- <attenuation> specifies the light attenuation properties, which are: -->
+        <attenuation>
+            <!-- <range> is range of light. -->
+            <range>1000</range>
+            <!-- <constant> is the constant attenuation factor, 1 never attenuate and 0 complete attenuation -->
+            <constant>0.9</constant>
+            <!-- <linear> is the linear attenuation factor, 1 means attenuate evenly over the distance -->
+            <linear>0.01</linear>
+            <!-- <quadratic> is the quadratic attenuation factor. It adds curvature to the attenuation -->
+            <quadratic>0.001</quadratic>
+        </attenuation>
+        <!-- <direction> is direction of the light, only applicable to spot and directional light -->
+        <direction>-0.5 0.1 -0.9</direction>
+    </light>
+</sdf>

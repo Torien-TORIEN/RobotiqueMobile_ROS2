@@ -1,0 +1,6 @@
+geometry_msgs/Point[] path
+---
+geometry_msgs/Point final_point
+---
+geometry_msgs/Point reached_point
+

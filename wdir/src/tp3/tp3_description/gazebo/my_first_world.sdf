@@ -1,0 +1,134 @@
+
+<?xml version="1.0" ?>
+<!-- sdf documentation : http://sdformat.org/spec?ver=1.9 
+https://staging.gazebosim.org/docs/citadel/sdf_worlds 
+https://gazebosim.org/docs/humble/building_robot
+-->
+<sdf version="1.9">
+    <!-- The world element encapsulates an entire world description including models, scene, physics and plugins -->
+    <world name="my_world">
+        <!--Let's all the world elements to be default ones-->
+
+        <!--Plugin for LiDAR-->
+        <plugin
+            filename="libignition-gazebo-sensors-system.so"
+            name="ignition::gazebo::systems::Sensors">
+            <render_engine>ogre2</render_engine>
+        </plugin>
+
+        <!--Plugin to show the scene after adding LiDAR-->
+        <plugin filename="libignition-gazebo-scene-broadcaster-system.so" name="ignition::gazebo::systems::SceneBroadcaster">
+            <!-- SceneBroadcaster shows our world scene -->
+        </plugin>
+
+        <!--Plugin to simulate physics after adding LiDAR-->
+        <plugin filename="libignition-gazebo-physics-system.so" name="ignition::gazebo::systems::Physics">
+            <!-- The Physics plugin is very important for simulating the dynamics of the world. -->
+        </plugin>
+
+
+
+
+        <!--Adding my robot here-->
+        <include>
+            <pose>0 0 1 0 0 0</pose><!--pose relative to the world-->
+            <uri>model://urdf/tp3_robot.urdf</uri>
+        </include>
+
+        <!-- adding the ground plane -->
+        <model name="ground_plane">
+            <!-- the ground will not move... -->
+            <static>true</static>
+            <!-- it is composed of only one link-->
+            <link name="ground_plane_link">
+                <!-- The collision shape of the link (can differ from the visual shape) -->
+                <collision name="ground_plane_collision">
+                    <!-- the geometry of the collision  -->
+                    <geometry>
+                        <plane>
+                            <!-- A ground plane  (x, y) -->
+                            <normal>0 0 1</normal>
+                        </plane>
+                    </geometry>
+                </collision>
+                <!-- the visual aspect of the link -->
+                <visual name="ground_plane_visual">
+                    <!-- the visual geometry of the link  -->
+                    <geometry>
+                        <plane>
+                            <!-- A ground plane  (x, y) -->
+                            <normal>0 0 1</normal>
+                            <!-- with a 100x100 size (meters) -->
+                            <size>100 100</size>
+                        </plane>
+                    </geometry>
+                    <material>
+                        <!-- To define the color of the ground with the light reflexion -->
+                        <ambient>0.68 0.96 0.52 1</ambient>
+                        <diffuse>0.68 0.96 0.52 1</diffuse>
+                        <specular>0.68 0.96 0.52 1</specular>
+                    </material>
+                </visual>
+            </link>
+        </model>
+
+        <!-- adding the SUN -->
+        <light type="directional" name="sun">
+            <!-- <pose> is the position (x,y,z) and orientation (roll, pitch, yaw)
+            of the light element with respect to the frame mentioned in the relative_to attribute;
+            in our case (relative_to attribute is ignored) it is relative to the world. -->
+            <pose>0 0 10 0 0 0</pose>
+            <!-- <cast_shadows> when true the light will cast shadows -->
+            <cast_shadows>true</cast_shadows>
+            <!-- <diffuse> and <specular> are the diffuse and specular light color -->
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+            <specular>0.2 0.2 0.2 1</specular>
+            <!-- <attenuation> specifies the light attenuation properties, which are: -->
+            <attenuation>
+                <!-- <range> is range of light. -->
+                <range>1000</range>
+                <!-- <constant> is the constant attenuation factor, 1 never attenuate and 0 complete attenuation -->
+                <constant>0.9</constant>
+                <!-- <linear> is the linear attenuation factor, 1 means attenuate evenly over the distance -->
+                <linear>0.01</linear>
+                <!-- <quadratic> is the quadratic attenuation factor. It adds curvature to the attenuation -->
+                <quadratic>0.001</quadratic>
+            </attenuation>
+            <!-- <direction> is direction of the light, only applicable to spot and directional light -->
+            <direction>-0.5 0.1 -0.9</direction>
+        </light>
+
+        <!-- adding a wall -->
+        <model name='wall'>
+            <static>true</static>
+            <pose>5 0 1 0 0 0</pose><!--pose relative to the world-->
+            <link name='box'>
+                <pose/>
+                <visual name='visual'>
+                    <geometry>
+                        <box>
+                            <size>0.5 10.0 2.0</size>
+                        </box>
+                    </geometry>
+                    <!--let's add color to our link-->
+                    <material>
+                        <ambient>0.0 1.0 1.0 1</ambient>
+                        <diffuse>0.0 1.0 1.0 1</diffuse>
+                        <specular>0.0 1.0 1.0 1</specular>
+                    </material>
+                </visual>
+                <collision name='collision'>
+                    <geometry>
+                        <box>
+                            <size>0.5 10.0 2.0</size>
+                        </box>
+                    </geometry>
+                </collision>
+            </link>
+        </model>
+
+
+
+
+    </world>
+</sdf>

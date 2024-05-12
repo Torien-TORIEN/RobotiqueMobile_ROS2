@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>tp3_nodes</name> <!-- NAME OF THE PACKAGE -->
+  <version>1.0.0</version>
+  <description>Robots and simulation description for the TP3</description> <!-- DESCRIPTION OF THE PACKAGE-->
+  <maintainer email="torien1227@gmail.com"> TORIEN </maintainer> <!-- YOUR NAME AND MAIL -->
+  <license>MIT</license> <!-- LICENSE FOR THE PACKAGE -->
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
